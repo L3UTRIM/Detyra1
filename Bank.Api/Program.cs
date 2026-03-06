@@ -11,8 +11,7 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddDbContext<BankDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ??
-                         "Server=(localdb)\\mssqllocaldb;Database=BankDb;Trusted_Connection=True;MultipleActiveResultSets=true"));
+    options.UseInMemoryDatabase("BankDb"));
 
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
@@ -31,6 +30,6 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = string.Empty;
 });
 
-app.UseHttpsRedirection();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();
